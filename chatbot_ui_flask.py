@@ -1,19 +1,15 @@
 import gradio as gr
-from flask import Flask, render_template_string
-import threading
 
-app = Flask(__name__)
-
-# Placeholder function for AI responses
+# Function for chatbot response
 def chatbot(query, uploaded_files):
     if uploaded_files:
         file_names = uploaded_files.name if isinstance(uploaded_files, list) else uploaded_files.name
     else:
         file_names = "No files uploaded."
-    
+
     return f"📝 AI response for: {query}\n\n📂 Files: {file_names}"
 
-# UI Layout with Gradio
+# Gradio UI layout
 def create_gradio_interface():
     with gr.Blocks(css="body {font-family: Arial, sans-serif;}") as demo:
         gr.Markdown("# 🧠 SMRT Knowledge Assistant")
@@ -50,19 +46,8 @@ def create_gradio_interface():
 
     return demo
 
-# Start Gradio on a different port
-def run_gradio():
-    gradio_interface = create_gradio_interface()
-    gradio_interface.launch(server_name="0.0.0.0", server_port=7860, share=False)
-
-# Run Gradio in a background thread
-threading.Thread(target=run_gradio).start()
-
-# Flask main route
-@app.route("/")
-def home():
-    return """<h1>SMRT Knowledge Assistant</h1>
-              <iframe src="http://127.0.0.1:7860" width="100%" height="800px"></iframe>"""
+# Start Gradio app
+demo = create_gradio_interface()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    demo.launch(server_name="0.0.0.0", server_port=8000, share=True)
