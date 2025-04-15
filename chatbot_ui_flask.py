@@ -48,11 +48,5 @@ def create_gradio_interface():
 
 # Start Gradio app
 demo = create_gradio_interface()
-
-  demo.launch(
-        server_name="0.0.0.0",
-        server_port=8181,
-        prevent_thread_lock=True,
-        share=False
-    )      
+demo.launch(server_name="0.0.0.0",server_port=8181, prevent_thread_lock=True,share=False)      
 
